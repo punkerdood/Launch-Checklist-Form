@@ -4,8 +4,8 @@
 
 window.addEventListener("load", function() {
    fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
-      response.json().then(function(json){
-        
+     
+   response.json().then(function(json){
          const div = document.getElementById("missionTarget");
          div.innerHTML =  `<h2>Mission Destination</h2>
          <ol>
@@ -15,62 +15,75 @@ window.addEventListener("load", function() {
             <li>Distance from Earth: ${json[0].distance}</li>
             <li>Number of Moons: ${json[0].moons}</li>
          </ol>
-         <img src="${json[0].image}">
-            `
-   } );
-})
-let button = document.getElementById("formSubmit");
-   button.addEventListener("click",function(){
-      
+         <img src="${json[0].image}">`
+}).then(function(){
+     
          let pilot = document.querySelector("input[name=pilotName]");
          let copilot = document.querySelector("input[name=copilotName]");
          let fuel = document.querySelector("input[name=fuelLevel]");
          let mass = document.querySelector("input[name=cargoMass]");
-            if (!isNaN(pilot.value)){
-            alert("Names must not contain numbers")
-            event.preventDefault();
+         let launchError = ["Pilot's name must not contain numbers","Pilots name must be filled in","Co-pilot's name must not contain numbers","Co-pilots name must be filled in",
+                           "Fuel must be entered as a number","Not enough gas!","Mass must be entered as a number","She is to heavy!","All fields required dummy."]
+         let alertError = []
+       pilot.addEventListener("change",function(){
+          
+            if (!isNaN(pilot.value)){alertError.push(launchError[0])}
+            if (alertError.length !== 0) {alert(`${alertError}`)
+            window.location.reload()}
+            document.getElementById("pilotStatus").style.visibility = "visible"
+            document.getElementById("pilotStatus").innerHTML = `Pilot ${pilot.value} present for duty.`
+            document.getElementById("launchStatus").innerHTML = '<h3>Information Received</h3>'
+         })
+         copilot.addEventListener("change",function(){
+            if (copilot.value === ""){alertError.push(launchError[3])};
+            if (!isNaN(copilot.value)){alertError.push(launchError[2])};
+            if (alertError.length !== 0) {alert(`${alertError}`)
+            window.location.reload()}
+            document.getElementById("copilotStatus").style.visibility = "visible"
+            document.getElementById("copilotStatus").innerHTML = `CoPilot ${copilot.value} present for duty.`
+            document.getElementById("launchStatus").innerHTML = '<h3>Information Received</h3>'
+         })
+         fuel.addEventListener("change",function(){
+            if (fuel.value === "" || fuel.value < 10000){alertError.push(launchError[5])
+            document.getElementById("launchStatus").innerHTML = '<h2 style="color:red">Shuttle not ready for launch.</h2>'
+            document.getElementById("fuelStatus").style.visibility = "visible"
+            document.getElementById("fuelStatus").innerHTML = `${fuel.value} : Needs more Gas.`}
+            if (isNaN(fuel.value)) {alertError.push(launchError([4]))
+                window.locationbar.reload()};
+            if (alertError.length !== 0) {alert(`${alertError}`)
+            event.preventDefault()
+               }
+            else {document.getElementById("fuelStatus").style.visibility = "visible"
+            document.getElementById("fuelStatus").innerHTML = `${fuel.value} : You have enough gas.`
+            document.getElementById("launchStatus").innerHTML = '<h3>Information Received</h3>'
+         }})
+         mass.addEventListener("change",function(){
+            if (mass.value === "" || mass.value > 10000){alertError.push(launchError[7])
+            document.getElementById("launchStatus").innerHTML = '<h2 style="color:red">Shuttle not ready for launch.</h2>'
+            document.getElementById("cargoStatus").style.visibility = "visible"
+            document.getElementById("cargoStatus").innerHTML = `${mass.value} : Cargo is too big.`}
+            if (isNaN(mass.value)) {alertError.push(launchError([6]))
+                window.locationbar.reload()};
+            if (alertError.length !== 0) {alert(`${alertError}`)
+            event.preventDefault()
+               }
+            else {document.getElementById("cargoStatus").style.visibility = "visible"
+            document.getElementById("cargoStatus").innerHTML = `${mass.value} : Cargo is light engouh.`
+            document.getElementById("launchStatus").innerHTML = '<h3>Information Received</h3>'
+         }})
+         document.getElementById("formSubmit").addEventListener(("focus"),function(){
+         if (pilot.value === "" || copilot.value === "" || mass.value === "" || fuel.value === ""){
+          alert(`All values must be entered. Press the reload button`)
          }
-            if (!isNaN(copilot.value)){
-            alert("Names must not contain numbers")
-            event.preventDefault();
-         }
-            if (isNaN(fuel.value)){
-               alert("Fuel must be entered as a number")
-               event.preventDefault();
-            }
-
-            if (isNaN(mass.value)){
-               alert("Mass must be entered as a number")
-               event.preventDefault();
-            }
-            if(pilot.value === ""|| copilot.value === ""|| fuel.value === ""|| mass.value === ""){
-               alert(`All fields required dummy.`)
-               event.preventDefault();
-            }
-            event.preventDefault();
-            document.getElementById("faultyItems").style.visibility = "visible"
-            document.getElementById("launchStatus").innerHTML = '<h2>Information Received</h2>'
-            document.getElementById("pilotStatus").innerHTML = `Pilot ${pilot.value} present for duty.`            
-            document.getElementById("copilotStatus").innerHTML = `Copilot ${copilot.value} present for duty.` 
-           
-            if (fuel.value < 10000) {
-               document.body.style.backgroundColor = 'red';
-               document.getElementById("launchStatus").innerHTML = '<h2>Shuttle not ready for launch.</h2>'
-               document.getElementById("fuelStatus").innerHTML = 'Not Enough Gas';
-               alert("Can't Go Up!");
-            }
-            else {
-               document.getElementById("fuelStatus").innerHTML = 'Gas is good.';
-            };
-            if (mass.value > 10000){
-               document.body.style.backgroundColor = 'red';
-               document.getElementById("cargoStatus").innerHTML = 'She is to heavy!';
-               document.getElementById("launchStatus").innerHTML = '<h2>Shuttle not ready for launch.</h2>'
-               alert("Can't Go Up!");
-            }
             
-     })     
-
+      })
+      document.getElementById("formSubmit").addEventListener("click",function(){
+         document.getElementById("launchStatus").innerHTML = '<h2 style="color:blue">Shuttle launch delayed until Saturday.</h2>' 
+         event.preventDefault()
+      })
+  
+      })
+      })
 });
 
 
