@@ -35,7 +35,7 @@ window.addEventListener("load", function() {
             document.getElementById("launchStatus").innerHTML = '<h3>Information Received</h3>'
          })
          copilot.addEventListener("change",function(){
-            if (copilot.value === ""){alertError.push(launchError[3])};
+            
             if (!isNaN(copilot.value)){alertError.push(launchError[2])};
             if (alertError.length !== 0) {alert(`${alertError}`)
             window.location.reload()}
@@ -44,31 +44,31 @@ window.addEventListener("load", function() {
             document.getElementById("launchStatus").innerHTML = '<h3>Information Received</h3>'
          })
          fuel.addEventListener("change",function(){
-            if (fuel.value === "" || fuel.value < 10000){alertError.push(launchError[5])
+            if (isNaN(fuel.value)) {alertError.push(launchError[4])};
+            if (fuel.value < 10000){alertError.push(launchError[5])}
+           
             document.getElementById("launchStatus").innerHTML = '<h2 style="color:red">Shuttle not ready for launch.</h2>'
             document.getElementById("fuelStatus").style.visibility = "visible"
-            document.getElementById("fuelStatus").innerHTML = `${fuel.value} : Needs more Gas.`}
-            if (isNaN(fuel.value)) {alertError.push(launchError([4]))
-                window.locationbar.reload()};
+            document.getElementById("fuelStatus").innerHTML = `${fuel.value} : Needs more Gas.`
+            
             if (alertError.length !== 0) {alert(`${alertError}`)
-            event.preventDefault()
-               }
+            window.location.reload()}
             else {document.getElementById("fuelStatus").style.visibility = "visible"
             document.getElementById("fuelStatus").innerHTML = `${fuel.value} : You have enough gas.`
             document.getElementById("launchStatus").innerHTML = '<h3>Information Received</h3>'
          }})
          mass.addEventListener("change",function(){
-            if (mass.value === "" || mass.value > 10000){alertError.push(launchError[7])
+            if (isNaN(mass.value)) {alertError.push(launchError[6])};
+            if (mass.value > 10000){alertError.push(launchError[7])}
+           
             document.getElementById("launchStatus").innerHTML = '<h2 style="color:red">Shuttle not ready for launch.</h2>'
             document.getElementById("cargoStatus").style.visibility = "visible"
-            document.getElementById("cargoStatus").innerHTML = `${mass.value} : Cargo is too big.`}
-            if (isNaN(mass.value)) {alertError.push(launchError([6]))
-                window.locationbar.reload()};
+            document.getElementById("cargoStatus").innerHTML = `${mass.value} : She's tooooooo heavy.`
+
             if (alertError.length !== 0) {alert(`${alertError}`)
-            event.preventDefault()
-               }
+            window.location.reload()}
             else {document.getElementById("cargoStatus").style.visibility = "visible"
-            document.getElementById("cargoStatus").innerHTML = `${mass.value} : Cargo is light engouh.`
+            document.getElementById("cargoStatus").innerHTML = `${mass.value} : You have good cargo.`
             document.getElementById("launchStatus").innerHTML = '<h3>Information Received</h3>'
          }})
          document.getElementById("formSubmit").addEventListener(("focus"),function(){
@@ -78,7 +78,7 @@ window.addEventListener("load", function() {
             
       })
       document.getElementById("formSubmit").addEventListener("click",function(){
-         document.getElementById("launchStatus").innerHTML = '<h2 style="color:blue">Shuttle launch delayed until Saturday.</h2>' 
+         document.getElementById("launchStatus").innerHTML = '<h2 style="color:green">Shuttle ready for launch.</h2>' 
          event.preventDefault()
       })
   
