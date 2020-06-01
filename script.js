@@ -90,12 +90,12 @@ window.addEventListener("load", function() {
       document.getElementById("formSubmit").addEventListener("click",function(){
          if (fuel.value < 10000 || mass.value > 10000 || (!isNaN(pilot.value)) || (!isNaN(copilot.value)) || isNaN(fuel.value) || isNaN(mass.value)){
             document.getElementById("launchStatus").innerHTML = '<h2 style="color:red">Shuttle not ready for launch.</h2>'
-            event.preventDefault()
-         if (mass.value >10000){document.getElementById("cargoStatus").innerHTML = `${mass.value} : She's tooooooo heavy.`;
+            event.preventDefault()}
+         else if (mass.value >10000){document.getElementById("cargoStatus").innerHTML = `${mass.value} : She's tooooooo heavy.`;
          document.getElementById("cargoStatus").style.visibility = "visible"}
-         if (fuel.value < 10000){document.getElementById("fuelStatus").style.visibility = "visible"
+        else  if (fuel.value < 10000){document.getElementById("fuelStatus").style.visibility = "visible"
          document.getElementById("fuelStatus").innerHTML = `${fuel.value} : Needs more Gas.`}
-         }
+         
          else{
             document.getElementById("faultyItems").style.visibility = "visible"
          document.getElementById("launchStatus").innerHTML = '<h2 style="color:green">Shuttle ready for launch.</h2>';
