@@ -70,41 +70,92 @@ window.addEventListener("load", function() {
            
            // document.getElementById("launchStatus").innerHTML = '<h2 style="color:red">Shuttle not ready for launch.</h2>'
            // document.getElementById("cargoStatus").style.visibility = "visible"
-            document.getElementById("cargoStatus").innerHTML = `${mass.value} : She's tooooooo heavy.`
+           // document.getElementById("cargoStatus").innerHTML = `${mass.value} : She's tooooooo heavy.`
 
             if (alertError.length !== 0) {alert(`${alertError}`)
             alertError = []
             }
             else {
-            document.getElementById("cargoStatus").innerHTML = `${mass.value} : You have good cargo.`
+            //document.getElementById("cargoStatus").innerHTML = `${mass.value} : You have good cargo.`
             document.getElementById("launchStatus").innerHTML = '<h3>Information Received</h3>'
          }})
-         document.getElementById("formSubmit").addEventListener(("click"),function(){
-         if (pilot.value === "" || copilot.value === "" || mass.value === "" || fuel.value === ""){
-          alert(`All values must be entered.`)
-          event.preventDefault()
+      //    document.getElementById("formSubmit").addEventListener(("click"),function(){
+      //    if (pilot.value === "" || copilot.value === "" || mass.value === "" || fuel.value === ""){
+      //    alert('all values must be entered')
+      //     event.preventDefault()
           
-         }
-         alertError = []
-      })
-      document.getElementById("formSubmit").addEventListener("click",function(){
-         if (fuel.value < 10000 || mass.value > 10000 || (!isNaN(pilot.value)) || (!isNaN(copilot.value)) || isNaN(fuel.value) || isNaN(mass.value)){
-            document.getElementById("launchStatus").innerHTML = '<h2 style="color:red">Shuttle not ready for launch.</h2>'
-            event.preventDefault()}
-         else if (mass.value >10000){document.getElementById("cargoStatus").innerHTML = `${mass.value} : She's tooooooo heavy.`;
-         document.getElementById("cargoStatus").style.visibility = "visible"}
-        else  if (fuel.value < 10000){document.getElementById("fuelStatus").style.visibility = "visible"
-         document.getElementById("fuelStatus").innerHTML = `${fuel.value} : Needs more Gas.`}
+      //    }
          
-         else{
-            document.getElementById("faultyItems").style.visibility = "visible"
-         document.getElementById("launchStatus").innerHTML = '<h2 style="color:green">Shuttle ready for launch.</h2>';
-         document.getElementById("pilotStatus").innerHTML = `Pilot ${pilot.value} present for duty.`
-         document.getElementById("copilotStatus").innerHTML = `CoPilot ${copilot.value} present for duty.`
-         document.getElementById("fuelStatus").innerHTML = `${fuel.value} : You have enough gas.`
-         document.getElementById("cargoStatus").innerHTML = `${mass.value} : You have good cargo.`
+      // })
+      document.getElementById("formSubmit").addEventListener("click",function(){
+         let flag1 = true
+         let flag2 = true
+            // {
+            //          document.getElementById("faultyItems").style.visibility = "visible"
+            //       document.getElementById("launchStatus").innerHTML = '<h2 style="color:green">Shuttle ready for launch.</h2>';
+            //       document.getElementById("pilotStatus").innerHTML = `Pilot ${pilot.value} present for duty.`
+            //       document.getElementById("copilotStatus").innerHTML = `CoPilot ${copilot.value} present for duty.`
+            //       document.getElementById("fuelStatus").innerHTML = `${fuel.value} : You have enough gas.`
+            //       document.getElementById("cargoStatus").innerHTML = `${mass.value} : You have good cargo.`
+            //       event.preventDefault()
+            //    }
+         if (pilot.value !== ''){
+            document.getElementById("pilotStatus").style.visibility = "visible"
+            event.preventDefault()
+         }
+         else {
+            document.getElementById("pilotStatus").style.visibility = "hidden"
+         }
+         if (copilot.value !== ''){
+            document.getElementById("copilotStatus").style.visibility = "visible"
+            event.preventDefault()
+         }
+         else {
+            document.getElementById("copilotStatus").style.visibility = "hidden"
+         }
+
+         if (mass.value > 10000){document.getElementById("cargoStatus").innerHTML = `${mass.value} : She's tooooooo heavy.`;
+         flag1 = false
+         document.getElementById("launchStatus").innerHTML = '<h2 style="color:red">Shuttle not ready for launch.</h2>'
+         document.getElementById("cargoStatus").style.visibility = "visible"
+         
          event.preventDefault()
-      }})
+         }
+         if (mass.value < 10000 ){document.getElementById("cargoStatus").innerHTML = `${mass.value} : You have good cargo.`
+            document.getElementById("cargoStatus").style.visibility = "visible"
+            flag1 = true
+            event.preventDefault()
+            
+         }
+         if (mass.value === ""){document.getElementById("cargoStatus").style.visibility = "hidden"
+         event.preventDefault()}
+
+         if (fuel.value < 10000){document.getElementById("fuelStatus").style.visibility = "visible"
+         document.getElementById("fuelStatus").innerHTML = `${fuel.value} : Needs more Gas.`}
+         flag2 = false
+         if (fuel.value > 10000){document.getElementById("fuelStatus").innerHTML = `${fuel.value} : You have enough gas.`
+            document.getElementById("fuelStatus").style.visibility = "visible"
+            flag2= true
+            event.preventDefault()
+           
+         }
+         if (fuel.value === ""){document.getElementById("fuelStatus").style.visibility = "hidden"
+            event.preventDefault()}
+         if ( pilot.value === "" || copilot.value === ""  || mass.value === ''  || fuel.value ===''){
+            document.getElementById("launchStatus").innerHTML = '<h2 style="color:red">Shuttle not ready for launch.</h2>'
+            alert(`All values must be entered.`)
+            
+         }
+         if (flag1 === false || flag2 === false) {
+            document.getElementById("launchStatus").innerHTML = '<h2 style="color:red">Shuttle not ready for launch.</h2>'
+         }
+         else{
+            document.getElementById("launchStatus").innerHTML = '<h2 style="color:green">Shuttle ready for launch.</h2>';
+         }
+      }
+
+      //    
+   )
   
       })
       })
