@@ -100,6 +100,7 @@ window.addEventListener("load", function() {
             //       event.preventDefault()
             //    }
          if (pilot.value !== ''){
+            document.getElementById("pilotStatus").innerHTML = `Pilot ${pilot.value} ready.`
             document.getElementById("pilotStatus").style.visibility = "visible"
             event.preventDefault()
          }
@@ -107,6 +108,7 @@ window.addEventListener("load", function() {
             document.getElementById("pilotStatus").style.visibility = "hidden"
          }
          if (copilot.value !== ''){
+            document.getElementById("copilotStatus").innerHTML = `CoPilot ${copilot.value} ready.`
             document.getElementById("copilotStatus").style.visibility = "visible"
             event.preventDefault()
          }
